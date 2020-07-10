@@ -23,7 +23,7 @@ height:40px;
 width:80%;
 margin:auto;
 background-color:#feed84;
-color:1#000000;
+color:#000000;
 border:0;
 border-radius:10px;
 cursor: pointer;

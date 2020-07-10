@@ -30,7 +30,7 @@ export default function ({setStatus}) {
                         document.getElementById("exists").style.color = "red";
                     }
                     else{
-                        history.push("/tela2/")
+                        history.push("/ClienteHome/")
                     }
                 }
                 else{

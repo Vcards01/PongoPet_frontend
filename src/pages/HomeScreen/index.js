@@ -8,9 +8,11 @@ import Cadastro from "./../../components/CadastroForm"
 import mainImg from '../../assets/HappyPets.png'
 import secondImg from '../../assets/QuemSomos.png'
 
-export default({setNavStatus}) => {
-    const [modalStatus,setModalStatus]=useState(false);
+export default({setNavStatus,setFooterStatus,}) => {
+    
     setNavStatus('home')
+    setFooterStatus("")
+    const [modalStatus,setModalStatus]=useState(false);
     return (
             <Container>
                 <SubContainer>

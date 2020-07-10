@@ -1,9 +1,25 @@
-import React from "react";
-import {StyledList, StyledListItens, StyledNav, StyledLink} from './styled'
+import React, {useState} from "react";
+import {StyledList, StyledListItens, StyledNav, StyledLink , SearchInput} from './styled'
 
-export default function ({navStatus}) {
+export default function ({navStatus,search,onSearch}) {
 
-    console.log(navStatus)
+    const [inputActive,setInputActive]=useState(search==""?false:true)
+
+    function handleInputFocus(){
+        setInputActive(true)
+    }
+
+    function handleInputBlur(){
+        if(search===""){
+            setInputActive(false)
+        } 
+    }
+
+    function handleOnchange(e)
+    {
+        onSearch(e.target.value)
+    }
+
 
     function handleLogin()
     {
@@ -35,10 +51,17 @@ export default function ({navStatus}) {
                             <StyledLink>Pedidos</StyledLink>
                         </StyledListItens>
                         <StyledListItens>
-                            <StyledLink>Buscar</StyledLink>
+                            <StyledLink>Perfil</StyledLink>
                         </StyledListItens>
                         <StyledListItens>
-                            <StyledLink>Perfil</StyledLink>
+                            <SearchInput type="text"
+                            placeholder="O que deseja buscar?"
+                            active={inputActive}
+                            value={search}
+                            onChange={handleOnchange}
+                            onFocus={handleInputFocus}
+                            onBlur={handleInputBlur}
+                            />
                         </StyledListItens>
                     </>:<>
                         <StyledListItens>

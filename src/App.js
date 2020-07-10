@@ -2,29 +2,29 @@ import React,{useState} from 'react';
 import { useSelector } from 'react-redux';
 import Router from './router'
 
-import { Container, Header,Footer , PageBody,Logo,MiniLogo,StyledP,StyledA } from './AppStyled';
+import { Container, Header, PageBody,Logo} from './AppStyled';
 import Nav from './components/Nav'
-
+import Footer from './components/Footer'
 
 export default () => {
     const[navStatus,setNavStatus] = useState("home")
+    const[footerStatus,setFooterStatus] = useState("")
+    const [search,setSearch]= useState("")
+
 
     return (
             <Container>
                 <Header>
                     <Logo/>
-                    <Nav navStatus={navStatus}/>
+                    <Nav navStatus={navStatus} search={search} onSearch={setSearch}/>
                 </Header>
                 <PageBody>
-                    <Router setNavStatus={setNavStatus}/>
+                    <Router setNavStatus={setNavStatus}
+                            setFooterStatus={setFooterStatus} 
+                            search={search}
+                     />
                 </PageBody>
-                <Footer>
-                    <StyledP>Desenvolvimento:<br/>Victor Hugo Cardoso</StyledP>
-                    <MiniLogo/>
-                    <StyledP>Creditos:<br/>
-                    Logo <StyledA href="http://www.freepik.com">Designed by Primm / Freepik</StyledA><br/>
-                    Artes e Imagens <StyledA href="http://www.freepik.com">Designed by Freepik</StyledA></StyledP>
-                </Footer>
+                <Footer Status={footerStatus}/>
             </Container>
     );
 }
