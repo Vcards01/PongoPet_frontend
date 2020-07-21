@@ -6,7 +6,7 @@ import { Container, Titulo } from './styled';
 export default ({setNavStatus}) => {
     const history = useHistory();
     const dispatch = useDispatch();
-    setNavStatus('petShop')
+    setNavStatus('petshop')
     let { nome } = useParams();
 
     const name = useSelector(state => state.user.name);

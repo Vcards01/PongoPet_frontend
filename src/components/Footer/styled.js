@@ -10,7 +10,7 @@ width:90%;
 max-width:980px;
 border-top:solid 1px #ffffff;
 margin:auto;
-margin-top:100px;
+
 background-color: #feed84;
 display:flex;
 justify-content: space-between;

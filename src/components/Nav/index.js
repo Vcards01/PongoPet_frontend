@@ -1,10 +1,9 @@
 import React, {useState} from "react";
 import {StyledList, StyledListItens, StyledNav, StyledLink , SearchInput} from './styled'
+import history from "../../history"
 
 export default function ({navStatus,search,onSearch}) {
-
     const [inputActive,setInputActive]=useState(search==""?false:true)
-
     function handleInputFocus(){
         setInputActive(true)
     }
@@ -29,6 +28,18 @@ export default function ({navStatus,search,onSearch}) {
     {
         document.getElementById("Quemsomos").scrollIntoView();
     }
+    function handleHome()
+    {
+        history.push('/HomeU/')
+    }
+    function handleProfile()
+    {
+        history.push('/ProfileU/')
+    }
+    function handleInit()
+    {
+        history.push("/")
+    }
 
     return (
         <StyledNav>
@@ -45,13 +56,13 @@ export default function ({navStatus,search,onSearch}) {
                     :(navStatus==="cliente")?
                     <>
                         <StyledListItens>
-                            <StyledLink >Inicio</StyledLink>
+                            <StyledLink onClick={handleHome}>Inicio</StyledLink>
                         </StyledListItens>
                         <StyledListItens>
                             <StyledLink>Pedidos</StyledLink>
                         </StyledListItens>
                         <StyledListItens>
-                            <StyledLink>Perfil</StyledLink>
+                            <StyledLink onClick={handleProfile}>Perfil</StyledLink>
                         </StyledListItens>
                         <StyledListItens>
                             <SearchInput type="text"
@@ -63,7 +74,8 @@ export default function ({navStatus,search,onSearch}) {
                             onBlur={handleInputBlur}
                             />
                         </StyledListItens>
-                    </>:<>
+                    </>:(navStatus==="petshop")?
+                    <>
                         <StyledListItens>
                             <StyledLink >Produtos e Serviços</StyledLink>
                         </StyledListItens>
@@ -72,6 +84,11 @@ export default function ({navStatus,search,onSearch}) {
                         </StyledListItens>
                         <StyledListItens>
                                 <StyledLink>Perfil</StyledLink>
+                        </StyledListItens>
+                    </>:
+                    <>
+                        <StyledListItens>
+                            <StyledLink onClick={handleInit} >Voltar para tela inicial!</StyledLink>
                         </StyledListItens>
                     </>
                 }

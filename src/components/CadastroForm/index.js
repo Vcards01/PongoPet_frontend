@@ -43,22 +43,22 @@ export default function({setStatus}){
     async function handleSubmit(event){
         event.preventDefault();
         if(TypeUser === "cliente"){
-            const response =  await api.post("/registerCliente",{
+            const responseApi =  await api.post("/registerCliente",{
                 email:email,
                 name:name,
                 password:password,
             })
-            if(response["data"]['exists']){
-                document.getElementById("emailError").style.display = "block";
-            }
-            else{
+            responseApi.then((response)=>{
                 document.getElementById("emailError").style.display = "none";
                 document.getElementById("cadastrado").style.display = "block";
                 document.getElementById("cadastrado").style.color = "green";
-                await sleep(3000);
+                sleep(3000);
                 setStatus(false)
                 document.getElementById("cadastrado").style.display = "none";
-            }
+            }).catch((error)=>{
+                document.getElementById("emailError").style.display = "block";
+            })
+            
         }
         else{
             const response =  await api.post("/registerPetShop",{
