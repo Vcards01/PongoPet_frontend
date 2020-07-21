@@ -1,6 +1,15 @@
 import styled from "styled-components"
 
 export const Container = styled.div`
+    @media (max-width: 767px) {
+        width:350px;
+    }
+    @media (max-width: 424px) {
+        width:300px;
+    }
+    @media (max-width: 374px) {
+        width:250px;
+    }
     background-color:#ffffff;
     border-radius:15px;
     box-shadow:0px 3px 6px rgba(0,0,0,0.16);
@@ -11,13 +20,13 @@ export const Container = styled.div`
     `;
 
 export const ItemPhotoArea = styled.div`
-    width:100px;
+    width:50px;
 `;
 
 export const ItemInfoArea = styled.div`
     flex:1;
-    margin-left:10px;
-    margin-right:10px;
+    margin-left:5px;
+    margin-right:5px;
 `;
 
 export const ItemButtomArea = styled.div`

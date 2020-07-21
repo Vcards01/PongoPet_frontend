@@ -1,12 +1,17 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-    width:640px;
     padding:20px
 `;
 export const ItemArea= styled.div`
+@media (max-width: 767px) {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
 height: 200px;
 display:flex;
+
 `;
 export const ItemButtons=styled.div`
 margin-top:10px;
@@ -16,6 +21,11 @@ align-items:center;
 `;
 
 export const ItemPhoto = styled.img`
+@media (max-width: 767px) {
+    width: 150px;
+    height: 110px;
+
+  }
 width:310px;
 border-radius:10px
 `;
@@ -32,26 +42,38 @@ export const ItemDetails = styled.div`
 `;
 
 export const ItemQuantityArea = styled.div`
-height:50px;
+@media (max-width: 767px) {
+    margin-top:10px;
+  }
 display:flex;
 justify-content: space-between;
 `;
 
 export const ItemName = styled.div`
+@media (max-width: 767px) {
+    font-size: 1.8rem;
+  }
 font-size: 3rem;
 font-weight: bold;
 `;
 
 export const ItemDescription = styled.div`
+@media (max-width: 767px) {
+    font-size: 1.2rem;
+  }
 font-size 1.4rem;
 `;
 
 export const ItemButton = styled.button`
+@media (max-width: 767px) {
+    margin-top:10px;
+    font-size:${props=>props.small ? "1.2rem" : "1.2rem"};
+  }
     border:0px;
     background-color:#dbc33b;
     box-shadow: 4px 5px 0px #333;
     color:#000;
-    font-size:${props=>props.small ? "1.3rem" : "2.2rem"};
+    font-size:${props=>props.small ? "1.2rem" : "2.2rem"};
     font-weight: bold;
     padding:${props=>props.small ? "5px 10px" : "10px 20px"};
     margin-left:10px;
@@ -75,6 +97,10 @@ export const ItemQtText = styled.div`
     font-weight: bold;
 `;
 export const ItemPrice = styled.div`
+@media (max-width: 767px) {
+    margin-left:10px;
+    font-size:${props=>props.small ? "1.3rem" : "1.5rem"};
+  }
 font-size:${props=>props.small ? "1.6rem" : "3rem"};
 margin-top:${props=>props.small ? "15px" : ""};
 font-weight:${props=>props.small ? "" : "bold"};

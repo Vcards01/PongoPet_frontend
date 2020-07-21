@@ -1,6 +1,15 @@
 import styled from "styled-components";
 
 export const CartArea = styled.div`
+    @media (max-width: 767px) {
+        right:100px;
+        left:100px;
+    }
+    @media (max-width: 424px) {
+        right:50px;
+        left:50px;
+    }
+
     background-color: #dbc33b;
     border-top-left-radius:10px;
     border-top-right-radius:10px;
