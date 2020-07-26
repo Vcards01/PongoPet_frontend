@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import { Footer,MiniLogo,StyledP,StyledA } from './styled';
 export default function ({Status}) {
     return (

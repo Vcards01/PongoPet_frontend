@@ -49,3 +49,8 @@ padding-left:50px;
 transition: all ease .2s;
 
 `;
+
+export const Exitimg = styled.img`
+    height: 24px;
+    margin-left:10px;
+`;

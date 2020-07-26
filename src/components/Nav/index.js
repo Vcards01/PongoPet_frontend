@@ -1,9 +1,10 @@
 import React, {useState} from "react";
-import {StyledList, StyledListItens, StyledNav, StyledLink , SearchInput} from './styled'
+import {StyledList, StyledListItens, StyledNav, StyledLink , SearchInput,Exitimg} from './styled'
 import history from "../../history"
+import imgsair from '../../assets/sair.png'
 
 export default function ({navStatus,search,onSearch}) {
-    const [inputActive,setInputActive]=useState(search==""?false:true)
+    const [inputActive,setInputActive]=useState(search===""?false:true)
     function handleInputFocus(){
         setInputActive(true)
     }
@@ -24,17 +25,22 @@ export default function ({navStatus,search,onSearch}) {
     {
         document.getElementById("login").focus(); 
     }
+    function handleLogout()
+    {
+        localStorage.clear()
+        window.location.reload();
+    }
     function handleQuemsomos()
     {
         document.getElementById("Quemsomos").scrollIntoView();
     }
     function handleHome()
     {
-        history.push('/HomeU/')
+        history.push('/Cliente')
     }
     function handleProfile()
     {
-        history.push('/ProfileU/')
+        history.push('/Profile')
     }
     function handleInit()
     {
@@ -63,6 +69,9 @@ export default function ({navStatus,search,onSearch}) {
                         </StyledListItens>
                         <StyledListItens>
                             <StyledLink onClick={handleProfile}>Perfil</StyledLink>
+                        </StyledListItens>
+                        <StyledListItens>
+                            <StyledLink onClick={handleLogout}>Sair</StyledLink>
                         </StyledListItens>
                         <StyledListItens>
                             <SearchInput type="text"

@@ -1,5 +1,7 @@
 import React,{useState} from 'react';
 import { Container, MainImg,SecondImg,LoginContainer,SubContainer,StyledP  } from './styled';
+import {useSelector} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 
 import FormLogin from "./../../components/LoginForm"
 import Modal from "./../../components/Modal"
@@ -8,12 +10,40 @@ import Cadastro from "./../../components/CadastroForm"
 import mainImg from '../../assets/HappyPets.png'
 import secondImg from '../../assets/QuemSomos.png'
 
+import api from "../../services/api"
+
 export default({setNavStatus,setFooterStatus,}) => {
     
     setNavStatus('home')
     setFooterStatus("")
+    const history = useHistory();
     const [modalStatus,setModalStatus]=useState(false);
+    const token= useSelector(state=>state.user.token)
+    const type= useSelector(state=>state.user.userType)
+
+    async function check()
+    {
+        const response = await api.get("/check",{
+            headers:{authorization:token}
+        })
+        if(response.data.status==="401"){
+            return true
+        }
+        switch(type) {
+            case 'cliente':
+                history.push("/Cliente")
+                break;
+            case 'petshop':
+                history.push("/Petshop")
+                break;
+            default:
+                break;
+        }
+        return false
+    }
+    const checked=check()
     return (
+        {checked}?
             <Container>
                 <SubContainer>
                     <LoginContainer>
@@ -32,6 +62,6 @@ export default({setNavStatus,setFooterStatus,}) => {
                 <Modal status={modalStatus} setStatus={setModalStatus}>
                     <Cadastro setStatus={setModalStatus}></Cadastro>
                 </Modal>
-            </Container>
+            </Container>  :<></>
     );
 }

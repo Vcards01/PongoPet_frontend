@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container,StyledP} from './styled'
+import {StyledP} from './styled'
 export default function({title,activeCategory,setActiveCategory})
 {
     function handleCategoryClick(){

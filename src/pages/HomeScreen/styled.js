@@ -12,7 +12,6 @@ export const SubContainer=styled.div`
   flex-direction: column;
   text-align:center;
 }
-margin-top:15px;
 text-align:center;
 width:90%
 max-width:980px;

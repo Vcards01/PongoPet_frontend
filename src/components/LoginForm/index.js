@@ -2,11 +2,13 @@ import React, {useState} from "react";
 import { useHistory} from "react-router-dom";
 import api from './../../services/api'
 import {StyledForm,StyledInput,StyledButton,StyledLabel,StyledU,SubContainer,StyledP} from './styled'
+import {useDispatch} from 'react-redux'
 
 export default function ({setStatus}) {
 
+    const dispatch = useDispatch()
     const history = useHistory();
-    const[TypeUser,setTypeUser] = useState("")
+    const[typeUser,setTypeUser] = useState("")
     const[email,setEmail] = useState("")
     const[password,setPassword] = useState("")
 
@@ -17,48 +19,30 @@ export default function ({setStatus}) {
         }   
 
     async function handleSubmit(event){
-            event.preventDefault();
-            if(TypeUser === "cliente"){
-                const response =  await api.post("/loginCliente",{
-                    email:email,
-                    password:password,
-                })
-                if(response["data"]['exists']){
-                    if (response["data"]["token"]==="")
-                    {
-                        document.getElementById("exists").style.display = "block";
-                        document.getElementById("exists").style.color = "red";
+        event.preventDefault();
+        const response =  await api.post("/auth",{email,password,type:typeUser,})
+        if(response.data.status==="400"){
+            document.getElementById("exists").style.display = "block";
+            document.getElementById("exists").style.color = "red";
+        }
+        else{
+            let token="Bearer "+response.data.token
+            dispatch({
+                type:'SET_TOKEN',
+                    payload:{
+                        token,
+                        userType:typeUser
                     }
-                    else{
-                        history.push("/HomeU/")
-                    }
-                }
-                else{
-                    document.getElementById("exists").style.display = "block";
-                    document.getElementById("exists").style.color = "red";
-                }
+                });
+            switch(typeUser) {
+                case 'cliente':
+                    history.push("/Cliente")
+                    break;
+                case 'petshop':
+                    history.push("/Petshop")
+                    break;
             }
-            else{
-                const response =  await api.post("/loginPetShop",{
-                    email:email,
-                    password:password,
-                })
-                if(response["data"]['exists']){
-                    if (response["data"]["token"]==="")
-                    {
-                        document.getElementById("exists").style.display = "block";
-                        document.getElementById("exists").style.color = "red";
-                    }
-                    else{
-                        history.push("/tela3/")
-                    }
-                }
-                else{
-                    document.getElementById("exists").style.display = "block";
-                    document.getElementById("exists").style.color = "red";
-                }
-            }
-            
+        }       
     }
 
     return (

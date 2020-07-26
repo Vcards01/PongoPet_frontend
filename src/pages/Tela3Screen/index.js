@@ -1,32 +1,34 @@
 import React from 'react';
-import { useHistory, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import { useHistory} from "react-router-dom";
+import { useSelector} from 'react-redux';
 import { Container, Titulo } from './styled';
 
 export default ({setNavStatus}) => {
     const history = useHistory();
-    const dispatch = useDispatch();
     setNavStatus('petshop')
-    let { nome } = useParams();
+    const type= useSelector(state=>state.user.userType)
 
-    const name = useSelector(state => state.user.name);
-
-    const handleTextChange = (e) => {
-        dispatch({
-            type: 'SET_NAME',
-            payload:{
-                name: e.target.value
-            }
-        });
+    function CheckType()
+    {
+        switch(type) {
+            case 'cliente':
+                history.push("/Cliente")
+                return false
+                break;
+            case 'petshop':
+                return true
+                break;
+            default:
+                break;
+        }
     }
+    const check=CheckType()
 
     return (
+        {check}?
         <Container>
-            <Titulo>Tela3 de {nome}</Titulo>
-
-            <input type="text" value={name} onChange={handleTextChange} />
-
+            <Titulo>Tela3</Titulo>
             <button onClick={()=>history.goBack()}>Voltar</button>
-        </Container>
+        </Container>:<></>
     );
 }

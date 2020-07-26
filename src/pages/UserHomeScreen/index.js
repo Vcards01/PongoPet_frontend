@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
-import { useHistory, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import { useHistory} from "react-router-dom";
+import { useSelector} from 'react-redux';
 import { Container, CategoryArea,CategoryList,ItemArea,ItemList } from './styled';
 import Cart from './../../components/Cart'
 import CategoryItem from './../../components/CategoryItem'
@@ -17,7 +17,7 @@ export default ({setNavStatus,setFooterStatus,search}) => {
     setFooterStatus('cliente')
 
     const history = useHistory();
-    const dispatch = useDispatch();
+    const type= useSelector(state=>state.user.userType)
 
     //States
     const[categories,setCategories]=useState([]);
@@ -30,76 +30,105 @@ export default ({setNavStatus,setFooterStatus,search}) => {
 
     //Effect de categorias
     useEffect(()=>{
+        let isActive = true;
         const getCategories = async ()=>{
             const cat = await api.post("/listCategories");
             if(cat.status===200){
-                setCategories(cat.data);
+                if(isActive){
+                    setCategories(cat.data);
+                }
             }
         };
         getCategories();
+        return () =>{isActive=false;}
     },[]);
 
     //Effect de pesquisa
     useEffect(()=>{
-        clearTimeout(searchTimer);
+        let isActive = true;
+        clearTimeout(searchTimer);   
         searchTimer=setTimeout(()=>{
-            setActiveSearch(search);
+            if(isActive){
+                setActiveSearch(search);
+            }
         },1000);
+        return () =>{isActive=false;}
     },[search])
 
     //Effect de filtro
     useEffect(()=>{
+        let isActive = true;
         setItems([])
+        const getItems = async ()=>{
+            const items = await api.post("/listItems",{activeCategory,activeSearch});
+            if(items.status===200)
+            {
+                if(isActive){
+                    setItems(items.data);
+                }
+            }
+    }   
         getItems()
+        return () =>{isActive=false;}
     },[activeCategory,activeSearch])
 
-    //Pega os intens do banco
-    async function getItems()
-    {
-        const items = await api.post("/listItems",{activeCategory,activeSearch});
-        if(items.status===200)
-        {
-            setItems(items.data);
-        }
-    }
-
+    //Abir modal do produto
     function handleProductClick(data)
     {
         setModalData(data);
         setModalStatus(true);
     }
 
+    //Verifica o tipo de usuario para limitar acesso
+    function CheckType()
+    {
+        switch(type) {
+            case 'cliente':
+                return true
+                break;
+            case 'petshop':
+                history.push("/Petshop")
+                return false
+                break;
+            default:
+                break;
+        }
+    }
+
+    const check=CheckType()
+
     return (
-        <>
-        <Container>
-            {categories.length>0 && 
-                <CategoryArea>
-                    <CategoryList>
-                        <CategoryItem title="Todas categorias" activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>
-                        {categories.map((item,index)=>(
-                            <CategoryItem key={index} title={item} activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>
-                        ))}
-                    </CategoryList>
-                </CategoryArea>
-            }
-            {items.length>0 &&
-                <ItemArea>
-                    <ItemList>
-                        {items.map((item,index)=>(
-                            <ItemElement
-                                key={index}
-                                data={item}
-                                onClick={handleProductClick}
-                            />
-                        ))}
-                    </ItemList>
-                </ItemArea>
-            }
-            <Modal status={modalStatus} setStatus={setModalStatus}>
-                <ModalItems status={setModalStatus} data={modalData}></ModalItems>
-            </Modal>
-        </Container>
-        <Cart></Cart>
-        </>
+        {check}?
+            <>
+            <Container>
+                {categories.length>0 && 
+                    <CategoryArea>
+                        <CategoryList>
+                            <CategoryItem title="Todas categorias" activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>
+                            {categories.map((item,index)=>(
+                                <CategoryItem key={index} title={item} activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>
+                            ))}
+                        </CategoryList>
+                    </CategoryArea>
+                }
+                {items.length>0 &&
+                    <ItemArea>
+                        <ItemList>
+                            {items.map((item,index)=>(
+                                <ItemElement
+                                    key={index}
+                                    data={item}
+                                    onClick={handleProductClick}
+                                />
+                            ))}
+                        </ItemList>
+                    </ItemArea>
+                }
+                <Modal status={modalStatus} setStatus={setModalStatus}>
+                    <ModalItems status={setModalStatus} data={modalData}></ModalItems>
+                </Modal>
+            </Container>
+            <Cart></Cart>
+            </>:<></>
     );
 }

@@ -3,6 +3,8 @@ import history from './history'
 
 import {Router, Switch, Route } from 'react-router-dom';
 
+import PrivateRoute from "./components/PrivateRoute"
+
 import HomeScreen from './pages/HomeScreen';
 import DefaultScreen from './pages/Default';
 
@@ -20,18 +22,18 @@ export default function Routes({setNavStatus,setFooterStatus,search}) {
                     <HomeScreen setNavStatus={setNavStatus} 
                     setFooterStatus={setFooterStatus} />
                 </Route>
-                <Route path="/HomeU/">
+                <PrivateRoute path="/Cliente">
                     <UserHomeScreen setNavStatus={setNavStatus} 
                     setFooterStatus={setFooterStatus} 
                     search={search} />
-                </Route>
-                <Route path="/ProfileU/">
-                    <UserPerfil/>
-                </Route>
-                <Route path="/tela3/">
+                </PrivateRoute>
+                <PrivateRoute path="/Profile">
+                    <UserPerfil setNavStatus={setNavStatus} setFooterStatus={setFooterStatus} />
+                </PrivateRoute>
+                <PrivateRoute path="/Petshop">
                     <Tela3Screen setNavStatus={setNavStatus} 
                     setFooterStatus={setFooterStatus}/>
-                </Route>
+                </PrivateRoute>
                 <Route path="*">
                     <DefaultScreen setNavStatus={setNavStatus} />
                 </Route>
