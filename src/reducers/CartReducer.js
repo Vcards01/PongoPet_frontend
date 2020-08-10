@@ -1,8 +1,5 @@
 const initialState = {
     items:[],
-    address:[],
-    discount:0,
-    delivery:0,
 };
 
 export default (state = initialState, action) => {
@@ -42,7 +39,10 @@ export default (state = initialState, action) => {
                 }
             }
             return{...state,items}
-        break
+        break;
+        case 'RESET':
+            return{...state,items:[]}
+        break;
     }
     return state
 }

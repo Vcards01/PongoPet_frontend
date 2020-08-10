@@ -3,9 +3,9 @@ import { Container, MainImg,SecondImg,LoginContainer,SubContainer,StyledP  } fro
 import {useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
-import FormLogin from "./../../components/LoginForm"
-import Modal from "./../../components/Modal"
-import Cadastro from "./../../components/CadastroForm"
+import FormLogin from "./../../components/GlobalLogin"
+import Modal from "../../components/GlobalModal"
+import Cadastro from "../../components/GlobalRegister"
 
 import mainImg from '../../assets/HappyPets.png'
 import secondImg from '../../assets/QuemSomos.png'

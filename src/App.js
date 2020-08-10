@@ -2,8 +2,8 @@ import React,{useState} from 'react';
 import Router from './router'
 
 import { Container, Header, PageBody,Logo} from './AppStyled';
-import Nav from './components/Nav'
-import Footer from './components/Footer'
+import Nav from './components/GlobalNav'
+import Footer from './components/GlobalFooter'
 
 export default () => {
     const[navStatus,setNavStatus] = useState("home")
