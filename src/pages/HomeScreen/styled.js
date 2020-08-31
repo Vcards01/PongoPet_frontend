@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 
 export const Container = styled.div`
-width:90%
+width:90%;
 max-width:980px;
 margin:auto;
 `;
@@ -55,10 +55,10 @@ export const LoginContainer= styled.div`
   width:300px;
   margin:auto;
 }
-width:400px;
-height:400px;
+width:450px;
+height:420px;
 background-color:#ffffff;
-margin-top:70px;
+margin-top:40px;
 border-radius:20px;
 `;
 

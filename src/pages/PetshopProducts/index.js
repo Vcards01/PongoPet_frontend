@@ -1,16 +1,16 @@
 import React, {useState,useEffect} from "react";
 import { useSelector} from 'react-redux';
 import {} from './styled';
-import { Container, CategoryArea,CategoryList,ItemArea,ItemList } from '../ClienteHome/styled';
+import { Container, CategoryArea,CategoryList,ItemArea,ItemList } from '../CustomerHome/styled';
 import {StyledButton} from "../../components/GlobalComponents/styeld"
 
 import api from "./../../services/api"
 //Componentes globais
 import CategoryItem from '../../components/GlobalCategoryItem'
-import ItemElement from '../../components/ClienteItemElement'
+import ItemElement from '../../components/CustomerProductElement'
 import Modal from '../../components/GlobalModal'
-import ProductNew from '../../components/PetshopProducts/PetshopProductsNew'
-import ProductEdit from '../../components/PetshopProducts/PetshopProductsEdit'
+import ProductNew from '../../components/PetshopProducts/ProductsNew'
+import ProductEdit from '../../components/PetshopProducts/ProductsEdit'
 
 export default function({setNavStatus,setFooterStatus}){
     setNavStatus('petshop')
@@ -29,7 +29,7 @@ export default function({setNavStatus,setFooterStatus}){
     useEffect(()=>{
         let isActive = true;
         const getCategories = async ()=>{
-            const cat = await api.post("/listCategories");
+            const cat = await api.post("/itens/list_categories");
             if(cat.status===200){
                 if(isActive){
                     setCategories(cat.data);
@@ -44,7 +44,7 @@ export default function({setNavStatus,setFooterStatus}){
         let isActive = true;
         setItems([])
         const getItems = async ()=>{
-            const items = await api.post("/myItems",{activeCategory,id:userId});
+            const items = await api.post("/petshop/list_itens",{activeCategory,id:userId});
             if(items.status===200)
             {
                 if(isActive){

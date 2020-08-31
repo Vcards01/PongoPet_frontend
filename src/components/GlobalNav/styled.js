@@ -23,6 +23,8 @@ cursor: pointer;
 export const StyledLink = styled.a`
 &:hover {
   background-color: #ffb74e;
+  color:#231f20;
+  text-decoration:none;
 };
 padding: 10px;
 margin: 15px;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-margin:10px;
+margin: 30px;
 `;
 
 export const SubContainer = styled.div`
@@ -48,5 +48,11 @@ margin-bottom:5px;
 export const PError = styled.p`
 font-size:1.4rem;
 display: none;
+
+`;
+
+export const ContainerBtn = styled.div`
+  display:flex;
+  align-items: center;
 
 `;

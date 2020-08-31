@@ -1,6 +1,5 @@
 import React,{useState} from 'react';
 import Router from './router'
-
 import { Container, Header, PageBody,Logo} from './AppStyled';
 import Nav from './components/GlobalNav'
 import Footer from './components/GlobalFooter'

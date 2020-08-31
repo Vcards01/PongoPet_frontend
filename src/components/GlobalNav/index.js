@@ -34,26 +34,37 @@ export default function ({navStatus,search,onSearch}) {
     {
         document.getElementById("Quemsomos").scrollIntoView();
     }
-    function handleHome()
-    {
-        history.push('/Cliente')
-    }
-    function handleProfile()
-    {
-        history.push('/Profile')
-    }
-    function handleProducts()
-    {
-        history.push('/Products')
-    }
     function handleInit()
     {
         history.push("/")
     }
+    //Routes Clientes
+    function handleHome()
+    {
+        history.push('/Customer')
+    }
+    function handleProfile()
+    {
+        history.push('/Customer/Profile')
+    }
+    function handleOrder()
+    {
+        history.push('/Customer/Orders')
+    }
+
+    //Routes PetShop
     function handlePetshop()
     {
         history.push("/Petshop")
     }
+    function handleProducts()
+    {
+        history.push('/Petshop/Products')
+    }
+    function handleProfilePet(){
+        history.push('/Petshop/Profile')
+    }
+
 
     return (
         <StyledNav>
@@ -73,7 +84,7 @@ export default function ({navStatus,search,onSearch}) {
                             <StyledLink onClick={handleHome}>Inicio</StyledLink>
                         </StyledListItens>
                         <StyledListItens>
-                            <StyledLink>Pedidos</StyledLink>
+                            <StyledLink onClick={handleOrder}>Pedidos</StyledLink>
                         </StyledListItens>
                         <StyledListItens>
                             <StyledLink onClick={handleProfile}>Perfil</StyledLink>
@@ -100,7 +111,7 @@ export default function ({navStatus,search,onSearch}) {
                             <StyledLink onClick={handleProducts}>Produtos e Serviços</StyledLink>
                         </StyledListItens>
                         <StyledListItens>
-                                <StyledLink>Perfil</StyledLink>
+                                <StyledLink onClick={handleProfilePet}>Perfil</StyledLink>
                         </StyledListItens>
                         <StyledListItens>
                             <StyledLink onClick={handleLogout}>Sair</StyledLink>

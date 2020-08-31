@@ -13,6 +13,7 @@ export const Container= styled.div`
   text-align:center;
   display: flex;
   flex-direction: column;
+  cursor:${props=>props.isClick? "pointer" : ""};
   `;
 
 export const StyledForm = styled.form`
@@ -31,7 +32,8 @@ export const StyledInput = styled.input`
 height:20px;
 width:80%;
 margin:auto;
-margin-top:10px;
+margin-top: 5px;
+padding:${props=>props.isZero? "0" : ""};
 `;
 
 export const StyledLabel = styled.label`
@@ -39,17 +41,20 @@ export const StyledLabel = styled.label`
     margin-left: 30px;
   }
 text-align:left;
-margin-top: 7px;
+margin-top: 10px;
 margin-left: 20px;
 `;
 
 export const StyledH3 = styled.h3`
 text-decoration: underline;
+margin: 0;
 `;
 
 export const StyledP = styled.p`
-text-decoration: underline;
-cursor:pointer;
+text-decoration: ${props=>props.NotUnder? "" : "underline"};
+cursor:${props=>props.isClick? "" : "pointer"};
+margin: 0;
+margin-top: 10px;
 
 `;
 

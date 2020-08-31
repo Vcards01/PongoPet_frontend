@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import api from '../../services/api'
+import * as boots from 'react-bootstrap'
 
-import {Container,SubContainer,StyledForm ,StyledInput,StyledButton,StyledLabel,PError} from './styled'
+import {Container,SubContainer,ContainerBtn,StyledForm ,StyledInput,StyledButton,StyledLabel,PError} from './styled'
 
 
 export default function({setStatus}){
@@ -12,15 +13,14 @@ export default function({setStatus}){
     const[email,setEmail] = useState("")
     const[contact,setcontato]=useState("")
     const[password,setPassword] = useState("")
+    const[loading,setLoading]=useState(false);
 
 
     //Função que faz o envio dos dados do cadastro para a API
     async function handleSubmit(event){
         event.preventDefault();
+        setLoading(true)
         let data
-        if(!isEmail()){
-            return false
-        }
         switch(typeUser) {
             case 'cliente':
                 data={email,name,password,type:typeUser}
@@ -31,11 +31,18 @@ export default function({setStatus}){
             default:
                 break;
         }
-        const response=  await api.post("/register",data)
+        const response=  await api.post("/user/register",data)
         if(response.data.status==="400")
         {
-            document.getElementById("emailError").style.display = "block";
-            document.getElementById("emailError").style.color = "red";
+            if(response.data.error==="Email invalido")
+            {
+                document.getElementById("emailError2").style.display = "block";
+                document.getElementById("emailError2").style.color = "red";
+            }
+            else{
+                document.getElementById("emailError").style.display = "block";
+            }
+
         }
         else{
             document.getElementById("emailError").style.display = "none";
@@ -80,41 +87,46 @@ export default function({setStatus}){
         }
     }
 
-    function isEmail()
-    {
-        var usuario = email.substring(0, email.indexOf("@"));
-        var dominio = email.substring(email.indexOf("@")+ 1, email.length);
-        
-        if ((usuario.length >=1) &&
-            (dominio.length >=7) && 
-            (usuario.search("@")===-1) && 
-            (dominio.search("@")===-1) &&
-            (usuario.search(" ")===-1) && 
-            (dominio.search(" ")===-1) &&
-            (dominio.search(".")!==-1) &&      
-            (dominio.indexOf(".") >=1)&& 
-            (dominio.lastIndexOf(".") < dominio.length - 1)) {
-            document.getElementById("emailError2").style.display = "none";
-            return true
-        }
-        else{
-            document.getElementById("emailError2").style.display = "block";
-            document.getElementById("emailError2").style.color = "red";
-            return false
-        }       
-    }
-
     function handleCheckEmail(value){
         document.getElementById("emailError").style.display = "none";
         setEmail(value)
+    }
+
+    function mascaraDeTelefone(telefone){
+        let textoAjustado=telefone.replace(/\-/g, '');
+        textoAjustado=textoAjustado.replace(/\(/g, '');
+        textoAjustado=textoAjustado.replace(/\)/g, '');
+        console.log(textoAjustado)
+        const isCelular = textoAjustado.length === 11?true:false;
+        console.log(isCelular)
+        if(isCelular) {
+            if(textoAjustado.length===11){
+            const parte0 = textoAjustado.slice(0,2)   
+            const parte1 = textoAjustado.slice(2,7);
+            const parte2 = textoAjustado.slice(7,12);
+            textoAjustado = `(${parte0})${parte1}-${parte2}`
+            setcontato(textoAjustado); 
+            }
+        } else {
+            if(textoAjustado.length===10){
+            const parte0 = textoAjustado.slice(0,2) 
+            const parte1 = textoAjustado.slice(2,6);
+            const parte2 = textoAjustado.slice(6,10);
+            textoAjustado = `(${parte0})${parte1}-${parte2}`
+            setcontato(textoAjustado); 
+            }
+        }if(textoAjustado.length<10){
+            setcontato(textoAjustado); 
+        }
+       
     }
 
 
     return(
         <Container>
             <StyledForm onSubmit={handleSubmit}>
-                    <PError id="cadastrado">Cadastro realizado,agora faça login!</PError>
-                    <label>Tipo de usuario:</label>
+                    <PError id="cadastrado">Cadastro realizado,um email de confirmação foi enviado!</PError>
+                    <label>Tipo de usuário:</label>
                 <SubContainer>
                     <label>
                         <input  type="radio" 
@@ -153,8 +165,9 @@ export default function({setStatus}){
                         <StyledLabel>Telefone do PetShop</StyledLabel>
                         <StyledInput type="text" 
                                     name="contato"
-                                    placeholder="ex:9999999999" 
-                                    onChange={event=>setcontato(event.target.value)}
+                                    value={contact}
+                                    placeholder="99 9999999 ou 99 999999999"
+                                    onChange={event=>mascaraDeTelefone(event.target.value)}
                                     required
                         />
                         <StyledLabel>Email:</StyledLabel>
@@ -182,7 +195,10 @@ export default function({setStatus}){
                                     required
                         />
                         <PError id="senhaError">As senhas não estão iguais!</PError>
-                        <StyledButton id="cadastrar">Cadastrar</StyledButton></>:
+                        <ContainerBtn>
+                            <StyledButton id="cadastrar">Cadastrar</StyledButton>
+                            {loading?<boots.Spinner animation="border" />:<></>}
+                        </ContainerBtn></>:
                     
                     (typeUser==="cliente")?
                     <>
@@ -218,7 +234,10 @@ export default function({setStatus}){
                                      required
                         />
                         <PError id="senhaError">As senhas não estão iguais!</PError>
-                        <StyledButton id="cadastrar">Cadastrar</StyledButton>
+                        <ContainerBtn>
+                            <StyledButton id="cadastrar">Cadastrar</StyledButton>
+                            {loading?<boots.Spinner animation="border" />:<></>}
+                        </ContainerBtn>
                     </>:
                     <></>
                 }
